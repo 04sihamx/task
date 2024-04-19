@@ -64,12 +64,22 @@
             padding: 10px;
             background-color: #fce4ec; /* Light pink list item background */
             border-bottom: 1px solid #e91e63; /* Pink border bottom */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         li:last-child {
             border-bottom: none;
         }
 
+        .priority {
+            margin-right: 10px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+        }
         /* End of CSS styles */
     </style>
     <script>
@@ -90,12 +100,31 @@
             var dueDateText = document.createTextNode("Due Date: " + dueDateInput);
             var descriptionText = document.createTextNode("Description: " + descriptionInput);
 
+            var prioritySelect = document.createElement("select");
+            prioritySelect.className = "priority";
+            prioritySelect.innerHTML = `
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            `;
+
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.addEventListener("change", function() {
+                li.classList.toggle("completed", this.checked);
+            });
+
+            var priorityContainer = document.createElement("div");
+            priorityContainer.appendChild(prioritySelect);
+            priorityContainer.appendChild(checkbox);
+
             li.appendChild(taskText);
             li.appendChild(document.createElement("br"));
             li.appendChild(dueDateText);
             li.appendChild(document.createElement("br"));
             li.appendChild(descriptionText);
             li.appendChild(document.createElement("br"));
+            li.appendChild(priorityContainer);
 
             ul.appendChild(li);
 
@@ -108,6 +137,13 @@
         window.onbeforeunload = function () {
             return "Are you sure you want to leave? Your data will be lost.";
         };
+
+        // Function to show/hide pages
+        function showPage(page) {
+            document.getElementById('instructions').style.display = 'none';
+            document.getElementById('tips').style.display = 'none';
+            document.getElementById(page).style.display = 'block';
+        }
     </script>
 </head>
 
@@ -127,6 +163,7 @@
         <p>Welcome to the To-Do List!</p>
         <p>If you close the page, your data will be lost.</p>
         <p>You can add tasks with due dates and descriptions to keep track of your work.</p>
+        <p>Feel free to explore the Tips page for additional productivity tips.</p>
     </div>
 
     <!-- Tips Page -->
@@ -148,14 +185,6 @@
         <button onclick="showPage('tips')">Tips</button>
     </div>
 
-    <script>
-        // Function to show/hide pages
-        function showPage(page) {
-            document.getElementById('instructions').style.display = 'none';
-            document.getElementById('tips').style.display = 'none';
-            document.getElementById(page).style.display = 'block';
-        }
-    </script>
 </body>
 
 </html>
