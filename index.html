@@ -27,7 +27,8 @@
             color: #e91e63; /* Pink heading color */
         }
 
-        input[type="text"] {
+        input[type="text"],
+        textarea {
             width: calc(100% - 22px); /* Adjusted width for input */
             padding: 10px;
             margin-bottom: 10px;
@@ -74,16 +75,33 @@
     <script>
         // JavaScript code
         function addTask() {
-            var input = document.getElementById("taskInput").value;
-            if (input === "") {
+            var taskInput = document.getElementById("taskInput").value;
+            var dueDateInput = document.getElementById("dueDateInput").value;
+            var descriptionInput = document.getElementById("descriptionInput").value;
+
+            if (taskInput === "") {
                 alert("Please enter a task!");
                 return;
             }
+
             var ul = document.getElementById("taskList");
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode(input));
+            var taskText = document.createTextNode("Task: " + taskInput);
+            var dueDateText = document.createTextNode("Due Date: " + dueDateInput);
+            var descriptionText = document.createTextNode("Description: " + descriptionInput);
+
+            li.appendChild(taskText);
+            li.appendChild(document.createElement("br"));
+            li.appendChild(dueDateText);
+            li.appendChild(document.createElement("br"));
+            li.appendChild(descriptionText);
+            li.appendChild(document.createElement("br"));
+
             ul.appendChild(li);
+
             document.getElementById("taskInput").value = "";
+            document.getElementById("dueDateInput").value = "";
+            document.getElementById("descriptionInput").value = "";
         }
 
         // Confirmation before closing the page
@@ -96,7 +114,9 @@
 <body>
     <div class="container">
         <h1>To-Do List</h1>
-        <input type="text" id="taskInput" placeholder="Enter task...">
+        <input type="text" id="taskInput" placeholder="Task...">
+        <input type="text" id="dueDateInput" placeholder="Due Date...">
+        <textarea id="descriptionInput" placeholder="Description..." rows="4"></textarea>
         <button onclick="addTask()">Add Task</button>
         <ul id="taskList"></ul>
     </div>
@@ -106,6 +126,7 @@
         <h1>Instructions</h1>
         <p>Welcome to the To-Do List!</p>
         <p>If you close the page, your data will be lost.</p>
+        <p>You can add tasks with due dates and descriptions to keep track of your work.</p>
     </div>
 
     <!-- Tips Page -->
@@ -116,6 +137,8 @@
             <li>Try the <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a> for time management.</li>
             <li>Take short breaks every hour to rest your eyes and stretch.</li>
             <li>Stay hydrated and eat healthy snacks to maintain energy levels.</li>
+            <li>Keep your workspace clean and organized for better productivity.</li>
+            <li>Set realistic goals and prioritize tasks to avoid feeling overwhelmed.</li>
         </ul>
     </div>
 
